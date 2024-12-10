@@ -19,7 +19,7 @@ public class KRS {
                 System.out.print("Pilih menu: ");
                 int pilihan = sc.nextInt();
                 sc.nextLine();
-    
+
                 if (pilihan == 1) {
                     tambahDataKRS(sc);
                 } else if (pilihan == 2) {
@@ -116,5 +116,25 @@ public class KRS {
         }else{
             System.out.println("Data KRS tidak ada");
         }
+    }
+    public static void analisisDataKRS() {
+        int[] totalSKSMahasiswa = new int[20];
+        boolean[] sudahDihitung = new boolean[20];
+        int jumlahMahasiswaKurang20 = 0;
+        for (int i = 0; i < data; i++) {
+            if (!sudahDihitung[i]) {
+                int totalSKS = 0;
+                for (int j = i; j < data; j++) {
+                    if (nimmahasiswa[i] == nimmahasiswa[j]) {
+                        totalSKS += sksmatkul[j];
+                        sudahDihitung[j] = true;
+                    }
+                }
+                if (totalSKS < 20) {
+                    jumlahMahasiswaKurang20++;
+                }
+            }
+        }
+        System.out.println("Jumlah mahasiswa dengan total SKS kurang dari 20: " + jumlahMahasiswaKurang20);
     }
 }
