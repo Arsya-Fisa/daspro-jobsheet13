@@ -1,6 +1,12 @@
 import java.util.Scanner;
 
 public class KRS {
+    static String [] namaMahasiswa = new String[20];
+    static int [] nimmahasiswa = new int[20];
+    static String [] kodematkul = new String[20];
+    static String [] matakuliah = new String[20];
+    static int [] sksmatkul = new int[20];
+    static int data = 0;
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
@@ -18,7 +24,7 @@ public class KRS {
                 if (pilihan == 1) {
                     tambahDataKRS(sc);
                 } else if (pilihan == 2) {
-                    System.out.println("Fitur Tampilkan Daftar KRS belum tersedia.");
+                    tampilkrs();
                 } else if (pilihan == 3) {
                     System.out.println("Fitur Analisis Data KRS belum tersedia.");
                 } else if (pilihan == 4) {
@@ -39,8 +45,8 @@ public class KRS {
             System.out.print("Nama Mahasiswa: ");
             String nama = sc.nextLine();
             System.out.print("NIM: ");
-            String nim = sc.nextLine();
-
+            int nim = sc.nextInt();
+            sc.nextLine();
             int totalSKS = 0;
 
             // Input data mata kuliah
@@ -63,8 +69,14 @@ public class KRS {
                     System.out.println("Total SKS melebihi batas (24 SKS). Tidak dapat menambahkan mata kuliah ini.");
                     break;
                 }
+                namaMahasiswa[data]=nama;
+                nimmahasiswa[data] = nim;
+                kodematkul[data] = kodeMK;
+                matakuliah[data]= namaMK;
+                sksmatkul[data]= sks;
 
                 totalSKS += sks;
+                data++;
                 System.out.println("Mata kuliah berhasil ditambahkan.");
 
                 System.out.print("Tambah mata kuliah lain? (y/t): ");
@@ -82,5 +94,29 @@ public class KRS {
                 break;
             }
         }
+    }
+    public static void tampilkrs (){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("--- Tampilkan Daftar KRS Mahasiswa ---");
+        System.out.print("Masukan NIM Mahasiswa: ");
+        int nim = sc.nextInt();
+        sc.nextLine();
+
+        int totalsks = 0;
+        boolean nimsiswa = false;
+        System.out.println("Daftar KRS:");
+        for (int i = 0; i < data; i++) {
+            if (nimmahasiswa[i] == nim) {
+                nimsiswa = true;
+                System.out.println("Kode mata kuliah: " + kodematkul[i] + ", Mata kuliah: " + matakuliah[i] + ", SKS: " + sksmatkul[i]);
+                totalsks += sksmatkul[i];
+            }
+        }
+        if (nimsiswa) {
+            System.out.println("Total SkS: " + totalsks);
+        }else{
+            System.out.println("Data KRS tidak ada");
+        }
+       
     }
 }
