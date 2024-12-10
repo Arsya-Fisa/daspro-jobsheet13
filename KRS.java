@@ -1,5 +1,4 @@
 import java.util.Scanner;
-
 public class KRS {
     static String [] namaMahasiswa = new String[20];
     static int [] nimmahasiswa = new int[20];
@@ -117,6 +116,5 @@ public class KRS {
         }else{
             System.out.println("Data KRS tidak ada");
         }
-       
     }
 }
