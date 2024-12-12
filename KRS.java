@@ -44,7 +44,7 @@ public class KRS {
             String nama = sc.nextLine();
             System.out.print("NIM: ");
             String nim = sc.nextLine();
-            sc.nextLine();
+            
             int totalSKS = 0;
 
             // Input data mata kuliah
@@ -99,13 +99,13 @@ public class KRS {
         System.out.println("--- Tampilkan Daftar KRS Mahasiswa ---");
         System.out.print("Masukan NIM Mahasiswa: ");
         String nim = sc.nextLine();
-        sc.nextLine();
+        
 
         int totalsks = 0;
         boolean nimsiswa = false;
         System.out.println("Daftar KRS:");
         for (int i = 0; i < data; i++) {
-            if (dataMahasiswa[i][1] == nim) {
+            if (dataMahasiswa[i][1].equals(nim)) {
                 nimsiswa = true;
                 System.out.println("Nama mahasiswa: " + dataMahasiswa[i][0]);
                 System.out.println("Kode mata kuliah: " + dataMahasiswa[i][2] + ", Mata kuliah: " + dataMahasiswa[i][3] + ", SKS: " + sksmatkul[i]);
@@ -118,15 +118,14 @@ public class KRS {
             System.out.println("Data KRS tidak ada");
         }
     }
-    public static void analisisDataKRS() {
-        
+    public static void analisisDataKRS() {   
         boolean[] sudahDihitung = new boolean[20];
         int jumlahMahasiswaKurang20 = 0;
         for (int i = 0; i < data; i++) {
             if (!sudahDihitung[i]) {
                 int totalSKS = 0;
                 for (int j = i; j < data; j++) {
-                    if (dataMahasiswa[i][2] == dataMahasiswa[j][2]) {
+                    if (dataMahasiswa[i][1] == dataMahasiswa[j][1]) {
                         totalSKS += sksmatkul[j];
                         sudahDihitung[j] = true;
                     }
