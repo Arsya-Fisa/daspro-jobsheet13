@@ -1,9 +1,7 @@
 import java.util.Scanner;
 public class KRS {
-    static String [] namaMahasiswa = new String[20];
-    static int [] nimmahasiswa = new int[20];
-    static String [] kodematkul = new String[20];
-    static String [] matakuliah = new String[20];
+    static String [][] dataMahasiswa = new String[20][4];
+   
     static int [] sksmatkul = new int[20];
     static int data = 0;
     public static void main(String[] args) {
@@ -21,11 +19,11 @@ public class KRS {
                 sc.nextLine();
 
                 if (pilihan == 1) {
-                    tambahDataKRS(sc);
+                    tambahDataKRS();
                 } else if (pilihan == 2) {
                     tampilkrs();
                 } else if (pilihan == 3) {
-                    System.out.println("Fitur Analisis Data KRS belum tersedia.");
+                    analisisDataKRS();
                 } else if (pilihan == 4) {
                     System.out.println("Terima kasih telah menggunakan program ini!");
                     break;
@@ -35,8 +33,9 @@ public class KRS {
             }
     }
 
-    // Metode untuk Menambah Data KRS Mahasiswa
-    static void tambahDataKRS(Scanner sc) {
+    // Fungsi tambah data
+    static void tambahDataKRS() {
+        Scanner sc = new Scanner(System.in);
         while (true) {
             System.out.println("\n=== Tambah Data KRS ===");
 
@@ -44,7 +43,7 @@ public class KRS {
             System.out.print("Nama Mahasiswa: ");
             String nama = sc.nextLine();
             System.out.print("NIM: ");
-            int nim = sc.nextInt();
+            String nim = sc.nextLine();
             sc.nextLine();
             int totalSKS = 0;
 
@@ -58,6 +57,15 @@ public class KRS {
                 int sks = sc.nextInt();
                 sc.nextLine();
 
+                dataMahasiswa[data][0]=nama;
+                dataMahasiswa[data][1] = nim;
+                dataMahasiswa[data][2] = kodeMK;
+                dataMahasiswa[data][3]= namaMK;
+                sksmatkul[data]= sks;
+
+                totalSKS += sks;
+                data++;
+
                 // Validasi SKS
                 if (sks < 1 || sks > 3) {
                     System.out.println("Jumlah SKS tidak valid! Harus antara 1 dan 3.");
@@ -68,14 +76,6 @@ public class KRS {
                     System.out.println("Total SKS melebihi batas (24 SKS). Tidak dapat menambahkan mata kuliah ini.");
                     break;
                 }
-                namaMahasiswa[data]=nama;
-                nimmahasiswa[data] = nim;
-                kodematkul[data] = kodeMK;
-                matakuliah[data]= namaMK;
-                sksmatkul[data]= sks;
-
-                totalSKS += sks;
-                data++;
                 System.out.println("Mata kuliah berhasil ditambahkan.");
 
                 System.out.print("Tambah mata kuliah lain? (y/t): ");
@@ -98,16 +98,17 @@ public class KRS {
         Scanner sc = new Scanner(System.in);
         System.out.println("--- Tampilkan Daftar KRS Mahasiswa ---");
         System.out.print("Masukan NIM Mahasiswa: ");
-        int nim = sc.nextInt();
+        String nim = sc.nextLine();
         sc.nextLine();
 
         int totalsks = 0;
         boolean nimsiswa = false;
         System.out.println("Daftar KRS:");
         for (int i = 0; i < data; i++) {
-            if (nimmahasiswa[i] == nim) {
+            if (dataMahasiswa[i][1] == nim) {
                 nimsiswa = true;
-                System.out.println("Kode mata kuliah: " + kodematkul[i] + ", Mata kuliah: " + matakuliah[i] + ", SKS: " + sksmatkul[i]);
+                System.out.println("Nama mahasiswa: " + dataMahasiswa[i][0]);
+                System.out.println("Kode mata kuliah: " + dataMahasiswa[i][2] + ", Mata kuliah: " + dataMahasiswa[i][3] + ", SKS: " + sksmatkul[i]);
                 totalsks += sksmatkul[i];
             }
         }
@@ -118,14 +119,14 @@ public class KRS {
         }
     }
     public static void analisisDataKRS() {
-        int[] totalSKSMahasiswa = new int[20];
+        
         boolean[] sudahDihitung = new boolean[20];
         int jumlahMahasiswaKurang20 = 0;
         for (int i = 0; i < data; i++) {
             if (!sudahDihitung[i]) {
                 int totalSKS = 0;
                 for (int j = i; j < data; j++) {
-                    if (nimmahasiswa[i] == nimmahasiswa[j]) {
+                    if (dataMahasiswa[i][2] == dataMahasiswa[j][2]) {
                         totalSKS += sksmatkul[j];
                         sudahDihitung[j] = true;
                     }
